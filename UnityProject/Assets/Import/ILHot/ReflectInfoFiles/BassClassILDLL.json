@@ -1,0 +1,144 @@
+[
+  {
+    "ClassName": "SampleHotProject1.Demo1",
+    "DisplayName": null,
+    "Fields": [
+      {
+        "FieldName": "TempStr",
+        "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "Obj",
+        "FieldType": "UnityEngine.Object, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "Demo",
+        "FieldType": "SampleHotProject1.DemoTest, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": {
+          "ClassName": "SampleHotProject1.DemoTest",
+          "DisplayName": null,
+          "Fields": [
+            {
+              "FieldName": "DemoStr",
+              "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "DemoBool",
+              "FieldType": "System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "DemoFloat",
+              "FieldType": "System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "TestEx",
+              "FieldType": "SampleHotProject1.DemoTestEx, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "ClassInfo": {
+                "ClassName": "SampleHotProject1.DemoTestEx",
+                "DisplayName": null,
+                "Fields": [
+                  {
+                    "FieldName": "LadyGaGa",
+                    "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                    "ClassInfo": null
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "FieldName": "DemoObj",
+        "FieldType": "SampleHotProject1.DemoTestObj, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": {
+          "ClassName": "SampleHotProject1.DemoTestObj",
+          "DisplayName": null,
+          "Fields": [
+            {
+              "FieldName": "DemoStr",
+              "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "ClassName": "SampleHotProject2.Demo2",
+    "DisplayName": null,
+    "Fields": [
+      {
+        "FieldName": "TempStr",
+        "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "Obj",
+        "FieldType": "UnityEngine.Object, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "Demo",
+        "FieldType": "SampleHotProject1.DemoTest, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": {
+          "ClassName": "SampleHotProject1.DemoTest",
+          "DisplayName": null,
+          "Fields": [
+            {
+              "FieldName": "DemoStr",
+              "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "DemoBool",
+              "FieldType": "System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "DemoFloat",
+              "FieldType": "System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "TestEx",
+              "FieldType": "SampleHotProject1.DemoTestEx, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "ClassInfo": {
+                "ClassName": "SampleHotProject1.DemoTestEx",
+                "DisplayName": null,
+                "Fields": [
+                  {
+                    "FieldName": "LadyGaGa",
+                    "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                    "ClassInfo": null
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "FieldName": "DemoObj",
+        "FieldType": "SampleHotProject1.DemoTestObj, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "ClassInfo": {
+          "ClassName": "SampleHotProject1.DemoTestObj",
+          "DisplayName": null,
+          "Fields": [
+            {
+              "FieldName": "DemoStr",
+              "FieldType": "System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+              "ClassInfo": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
