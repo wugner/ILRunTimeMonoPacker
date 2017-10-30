@@ -7,29 +7,35 @@ using System.IO;
 using PartialTest;
 using System.Reflection;
 using System;
-using ILHotAttribute;
 using ILHot;
 using System.Linq;
 
 public class PlayModeTest{
-    [RuntimeInitializeOnLoadMethod]
-    public static void PreLoadDLl()
-    {
-        var preference = Resources.Load<ILHotPreference>("ILHotPreference");
-        var dllList = preference.ILHotDLLList.Select(ilPath =>
-        {
-            return Constant.AppDataPath + "\\" + ilPath;
-        }).ToList();
+    //  [RuntimeInitializeOnLoadMethod]
+    //  public static void PreLoadDll()
+    //  {
+    //      Debug.Log("PreLoadDll");
+    //      var preference = Resources.Load<ILHotPreference>("ILHotPreference");
+    //      var dllList = preference.ILHotDLLList.Select(ilPath =>
+    //      {
+    //          return Constant.AppDataPath + "\\" + ilPath;
+    //      }).ToList();
+    //  
+    //      foreach (var dllPath in dllList)
+    //      {
+    //          byte[] dllBytes = File.ReadAllBytes(dllPath);
+    //          ILRunTimeSingleTon.Instance.LoadHotDLL(dllBytes);
+    //      }
+    //  }
 
-        foreach (var dllPath in dllList)
-        {
-            byte[] dllBytes = File.ReadAllBytes(dllPath);
-            ILRunTimeSingleTon.Instance.LoadHotDLL(dllBytes);
-        }
+    [Test]
+    public void ILHotMonoTest()
+    {
+        var simpleObj   = GameObject.Instantiate(Resources.Load("Simple"));
     }
 
 	[Test]
-	public void CallILMethodTestSimplePasses()
+	public void CallILTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -42,7 +48,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void IL2CallIL1MethodTestSimplePasses()
+    public void IL2CallIL1Test()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -52,7 +58,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void CycCallMethodTestSimplePasses()
+    public void CycCallTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -75,7 +81,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void UnityInterfaceMethodTestSimplePasses()
+    public void UnityInterfaceTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -85,7 +91,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void ILInterfaceMethodTestSimplePasses()
+    public void ILInterfaceTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -95,7 +101,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void ILExtraFuncMethodTestSimplePasses()
+    public void ILExtraFuncTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -105,7 +111,7 @@ public class PlayModeTest{
     }
     
     [Test]
-    public void UnityExtraFuncMethodTestSimplePasses()
+    public void UnityExtraFuncTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -115,7 +121,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void SortTestMethodTestSimplePasses()
+    public void SortTest()
     {
         if (ILRunTimeSingleTon.Domain != null)
         {
@@ -127,7 +133,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void SerializeDLLAttributeMethodTestSimplePasses()
+    public void SerializeDLLAttributeTest()
     {
         var preference = Resources.Load<ILHotPreference>("ILHotPreference");
         var dllList = preference.ILHotDLLList.Select(ilPath =>
@@ -138,14 +144,14 @@ public class PlayModeTest{
 
         ReflectInfoGenerator.Reflect.LoadDLL(dllList);
         ReflectInfoGenerator.Reflect.SetOutPutPath(@"D:\ILRunTimeMonoPacker\UnityProject\Assets\Import\ILHot\ReflectInfoFiles", "AttILDLL.json");
-        var result = ReflectInfoGenerator.Reflect.FormatByAttribute("ILHotAttribute.ILHotMonoSerilizableAttribute");
+        var result = ReflectInfoGenerator.Reflect.FormatByAttribute("ILHot.ILHotMonoProxyAttribute");
         if (result != "Succeed")
             throw new System.Exception(result);
         Debug.Log(string.Concat("[SerializeDLLAttributeMethodTestSimplePasses] Call FormatByAttribute:", result));
     }
 
     [Test]
-    public void SerializeDLLClassMethodTestSimplePasses()
+    public void SerializeDLLClassTest()
     {
         var preference = Resources.Load<ILHotPreference>("ILHotPreference");
         var dllList = preference.ILHotDLLList.Select(ilPath =>
@@ -163,7 +169,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void SerializeDLLInterfaceMethodTestSimplePasses()
+    public void SerializeDLLInterfaceTest()
     {
         var preference = Resources.Load<ILHotPreference>("ILHotPreference");
         var dllList = preference.ILHotDLLList.Select(ilPath =>
@@ -171,7 +177,7 @@ public class PlayModeTest{
             return Constant.AppDataPath + "\\" + ilPath;
         }).ToList();
         dllList.Add(Constant.AppDataPath + "\\..\\Library\\ScriptAssemblies\\Assembly-CSharp.dll");
-
+        
         ReflectInfoGenerator.Reflect.LoadDLL(dllList);
         ReflectInfoGenerator.Reflect.SetOutPutPath(@"D:\ILRunTimeMonoPacker\UnityProject\Assets\Import\ILHot\ReflectInfoFiles", "InterfaceILDLL.json");
         var result = ReflectInfoGenerator.Reflect.FormatByInterface("SampleHotProject2.ILBaseInterface");
@@ -181,7 +187,7 @@ public class PlayModeTest{
     }
     
     [Test]
-    public void SerializeDLLMonoInterfaceMethodTestSimplePasses()
+    public void SerializeDLLMonoInterfaceTest()
     {
         var preference = Resources.Load<ILHotPreference>("ILHotPreference");
         var dllList = preference.ILHotDLLList.Select(ilPath =>
@@ -199,7 +205,7 @@ public class PlayModeTest{
     }
 
     [Test]
-    public void SerializeDLLPlayMakerInterfaceMethodTestSimplePasses()
+    public void SerializeDLLPlayMakerInterfaceTest()
     {
         var preference = Resources.Load<ILHotPreference>("ILHotPreference");
         var dllList = preference.ILHotDLLList.Select(ilPath =>

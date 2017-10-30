@@ -13,7 +13,7 @@ using System.Linq;
 namespace ILHot
 {
 	[ActionCategory("ILHot_Common")]
-	public class ILHotFsmStateActionProxy : FsmStateAction
+	public class ILHotFsmProxy : FsmStateAction
 	{
 		public FsmEvent TestEv1;
 		public FsmEvent TestEv2;
@@ -248,15 +248,8 @@ namespace ILHot
 		
 		public override string ErrorCheck()
 		{
-            if (ILReflectJsonImport.FsmClassInfoList == null)
-                ILReflectJsonImport.LoadJson();
-
             if (string.IsNullOrEmpty(_runtimeClassName))
                 return "Please select a type!";
-            else if (ILReflectJsonImport.FsmClassInfoList == null)
-            {
-                return "FsmReflectInfo.json is not exist!";
-            }
             else
             {
                 List<IrpClassInfo> _classInfoList = new List<IrpClassInfo>();

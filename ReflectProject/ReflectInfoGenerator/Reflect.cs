@@ -61,28 +61,44 @@ namespace ReflectInfoGenerator
             return string.Concat("Succeed:", path, "\\", name);
         }
 
+        static string tmpStr = "";
         public static string FormatByAttribute(string attName)
         {
-            var attTypeList = (from assembly in AssemblyList
-                               where assembly.GetType(attName) != null
-                               select assembly.GetType(attName)).ToList();
+            var componentName = "ILHot.ILHotComponentMenu";
+            var componentType = GetType(componentName);
 
-            if (attTypeList.Count > 0)
+            var monoProxyType = GetType(attName);
+            
+            var serializeName = "ILHot.ILHotSerializeField";
+            var serializeType = GetType(serializeName);
+
+            var objectClassName = "ILHot.ILMonoBehaviour";
+            var objectClassType = GetType(objectClassName);
+            
+            if (componentType != null && monoProxyType != null && serializeType != null && objectClassType != null)
             {
-                var subClassField = attTypeList[0].GetField("SubClass", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                var displayNameField = attTypeList[0].GetField("DisplayName", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                var displayNameField = componentType.GetField("MenuPath", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 string result = FormatDLLByManual(type =>
                 {
-                    var attList = type.GetCustomAttributes(attTypeList[0], false);
-                    if (attList.Length == 0)
-                        return new PredicateInfo() { Result = false };
+                    var componentAttribute  = type.GetCustomAttributes(componentType, false).ToList();
+                    var monoAttribute       = type.GetCustomAttributes(monoProxyType, false).ToList();
 
-                    var subClass = subClassField.GetValue(attList[0]);
-                    var displayName = displayNameField.GetValue(attList[0]);
-                    return new PredicateInfo() {
-                        Result = (bool)subClass == false,
-                        DisplayName = (string)displayName
-                    };
+                    var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToList();
+                    var serializeField = fields.Find(field => field.GetCustomAttributes(serializeType, false).Length != 0);
+                    
+                    var predicateInfo = new PredicateInfo();
+                    predicateInfo.IsProxy       = monoAttribute.Count > 0;
+                    predicateInfo.IsBaseType    = serializeField != null;
+                    predicateInfo.IsSubClass    = monoAttribute.Count == 0;
+                    predicateInfo.IsObject      = objectClassType.IsAssignableFrom(type);
+                    predicateInfo.DisplayName   = componentAttribute.Count == 0 ? "" : (string)displayNameField.GetValue(componentAttribute[0]);
+
+                    if (predicateInfo.DisplayName == "DemoTestObjComponent")
+                    {
+                        tmpStr += "\n" + JsonConvert.SerializeObject(predicateInfo);
+                    }
+
+                    return predicateInfo;
                 },
                 field =>
                 {
@@ -107,7 +123,7 @@ namespace ReflectInfoGenerator
                     {
                         return new PredicateInfo()
                         {
-                            Result = classTypeList[0].IsAssignableFrom(type)
+                            IsProxy = classTypeList[0].IsAssignableFrom(type)
                         };
                     },
                     field =>
@@ -133,7 +149,7 @@ namespace ReflectInfoGenerator
                     {
                         return new PredicateInfo()
                         {
-                            Result = classTypeList[0].IsAssignableFrom(type)
+                            IsProxy = classTypeList[0].IsAssignableFrom(type)
                         };
                     },
                     field =>
@@ -147,55 +163,69 @@ namespace ReflectInfoGenerator
 
         public static string FormatMono()
         {
-            var result = FormatByAttribute("ILHotAttribute.ILHotMonoSerilizableAttribute");
+            var result = FormatByAttribute("ILHot.ILHotMonoProxyAttribute");
             return result;
+        }
+
+        static string tempStr = "";
+
+        public static Type GetType(string className)
+        {
+            var classList = (from assembly in AssemblyList
+                             where assembly.GetType(className) != null
+                             select assembly.GetType(className)).ToList();
+            return classList.Count > 0 ? classList[0] : null;
         }
 
         public static string FormatPlayMaker()
         {
-            var baseClassName = "SampleHotProject1.ILHotFsmStateAction";
-            var classTypeList = (from assembly in AssemblyList
-                                 where assembly.GetType(baseClassName) != null
-                                 select assembly.GetType(baseClassName)).ToList();
+            var componentName   = "ILHot.ILHotComponentMenu";
+            var componentType   = GetType(componentName);
+            
+            var fsmProxyName    = "ILHot.ILHotFsmProxyAttribute";
+            var fsmProxyType    = GetType(fsmProxyName);
 
-            var attName = "ILHotAttribute.ILHotFsmSerilizableAttribute";
-            var attTypeList = (from assembly in AssemblyList
-                               where assembly.GetType(attName) != null
-                               select assembly.GetType(attName)).ToList();
+            var serializeName   = "ILHot.ILHotSerializeField";
+            var serializeType   = GetType(serializeName);
 
-            if (classTypeList.Count > 0 && attTypeList.Count > 0)
+            var objectClassName = "ILHot.ILProxyBehabiour";
+            var objectClassType = GetType(objectClassName);
+
+            if (componentType != null && fsmProxyType != null && serializeType != null)
             {
-                var subClassField = attTypeList[0].GetField("SubClass", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                var displayNameField = attTypeList[0].GetField("DisplayName", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                var displayNameField = componentType.GetField("MenuPath", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 var result = FormatDLLByManual(type => {
+                    var componentAttribute  = type.GetCustomAttributes(componentType, false).ToList();
+                    var fsmAttribute        = type.GetCustomAttributes(fsmProxyType, false).ToList();
 
-                    var attList = type.GetCustomAttributes(attTypeList[0], false);
-                    if (attList.Length == 0)
-                        return new PredicateInfo() { Result = false };
-
-                    var subClass = subClassField.GetValue(attList[0]);
-                    var displayName = displayNameField.GetValue(attList[0]);
-                    return new PredicateInfo()
-                    {
-                        Result = classTypeList[0].IsAssignableFrom(type) && classTypeList[0].FullName != type.FullName && (bool)subClass == false,
-                        DisplayName = (string)displayName
-                    };
+                    var fields              = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToList();
+                    var serializeField      = fields.Find(field => field.GetCustomAttributes(serializeType, false).Length != 0);
+                    
+                    var predicateInfo = new PredicateInfo();
+                    predicateInfo.IsProxy       = fsmAttribute.Count > 0;
+                    predicateInfo.IsBaseType    = serializeField != null;
+                    predicateInfo.IsSubClass    = fsmAttribute.Count == 0;
+                    predicateInfo.IsObject      = objectClassType.IsAssignableFrom(type);
+                    predicateInfo.DisplayName   = componentAttribute.Count == 0 ? "" : (string)displayNameField.GetValue(componentAttribute[0]);
+                    return predicateInfo;
                 },
                 field =>
                 {
-                    return (field.GetCustomAttributes(false).ToList().FindAll(att => att.GetType().FullName == "UnityEngine.SerializeField").Count != 0)
-                        && (field.FieldType.IsSubclassOf(typeof(NamedVariable)) || field.FieldType == typeof(FsmEvent) || classTypeList[0].IsAssignableFrom(field.FieldType));
+                    return field.GetCustomAttributes(serializeType, false).Length > 0;
                 });
                 return result;
             }
 
             return "Faild:Dll or attribute is invalid!";
         }
-
+        
         public class PredicateInfo
         {
-            public bool Result;
-            public string DisplayName;
+            public bool     IsProxy;
+            public bool     IsBaseType;
+            public bool     IsSubClass;
+            public bool     IsObject;
+            public string   DisplayName;
         }
 
         public static string FormatDLLByManual(Func<Type, PredicateInfo> TypePredicate, Func<FieldInfo, bool> filePredicate)
@@ -208,7 +238,27 @@ namespace ReflectInfoGenerator
                 {
                     var classItem = GetTypeInfo(type, TypePredicate, filePredicate);
                     if (classItem != null)
+                    {
                         classList.Add(classItem);
+                        var fieldList = GetFieldClasses(classItem);
+                        var assClassList = fieldList.FindAll(field => classList.FindIndex(c => c.ClassName == field) == -1);
+
+                        tempStr += "\n" + classItem.ClassName;
+
+                        tempStr += "\n   fieldList " + JsonConvert.SerializeObject(fieldList);
+                        tempStr += "\n   assClassList " + JsonConvert.SerializeObject(assClassList);
+
+                        foreach (var className in assClassList)
+                        {
+                            var classType = GetType(className);
+                            if (classType != null)
+                            {
+                                var subClassItem = GetTypeInfo(classType, TypePredicate, filePredicate, true);
+                                if (subClassItem != null)
+                                    classList.Add(subClassItem);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -230,12 +280,14 @@ namespace ReflectInfoGenerator
         public static IrpClassInfo GetTypeInfo(Type type, Func<Type, PredicateInfo> TypePredicate, Func<FieldInfo, bool> filePredicate, bool ignorePredicate = false)
         {
             var predicate = TypePredicate(type);
-            if ((ignorePredicate || predicate.Result) && type.FullName.Contains("+") == false)
+            if ((ignorePredicate || predicate.IsProxy) && predicate.IsBaseType == true && type.FullName.Contains("+") == false)
             {
                 IrpClassInfo classItem = new IrpClassInfo();
                 classItem.Fields = new List<IrpFieldInfo>();
                 classItem.ClassName = type.FullName;
                 classItem.DisplayName = predicate.DisplayName;
+                classItem.IsSubClass = predicate.IsSubClass;
+                classItem.IsObject = predicate.IsObject;
                 var fieldList = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fieldList)
                 {
@@ -243,10 +295,8 @@ namespace ReflectInfoGenerator
                     {
                         var fieldInfo = new IrpFieldInfo();
                         fieldInfo.FieldName = field.Name;
-                        fieldInfo.FieldType = field.FieldType;
-                        var attributes = field.FieldType.GetCustomAttributes(false);
-                        if (attributes.ToList().FindAll(att => att.GetType().FullName == "ILHotAttribute.ILHotMonoSerilizableAttribute" || att.GetType().FullName == "ILHotAttribute.ILHotFsmSerilizableAttribute").Count() > 0)
-                            fieldInfo.ClassInfo = GetTypeInfo(field.FieldType, TypePredicate, filePredicate, true);
+                        fieldInfo.FieldType = field.FieldType.ToString();
+                        fieldInfo.ClassInfo = GetTypeInfo(field.FieldType, TypePredicate, filePredicate, true);
                         classItem.Fields.Add(fieldInfo);
                     }
                 }
@@ -255,6 +305,20 @@ namespace ReflectInfoGenerator
             }
 
             return null;
+        }
+
+        public static List<string> GetFieldClasses(IrpClassInfo classInfo)
+        {
+            var classList = new List<string>();
+            foreach (var field in classInfo.Fields)
+            {
+                if (field.ClassInfo != null)
+                {
+                    classList.Add(field.FieldType);
+                    classList = classList.Union(GetFieldClasses(field.ClassInfo)).ToList();
+                }
+            }
+            return classList;
         }
     }
 }

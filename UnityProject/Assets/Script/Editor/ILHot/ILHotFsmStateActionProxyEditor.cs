@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using ReflectInfoGenerator;
 using Newtonsoft.Json;
-using ILHotAttribute;
 
 namespace ILHot
 {
-	[CustomActionEditor(typeof(ILHotFsmStateActionProxy))]
+	[CustomActionEditor(typeof(ILHotFsmProxy))]
 	public class ILHotFsmStateActionProxyEditor : CustomActionEditor
 	{
         class ILHotFsmProxyStruct
@@ -59,10 +58,15 @@ namespace ILHot
         {
             if (ILReflectJsonImport.FsmClassInfoList == null)
             {
+                ILReflectJsonImport.LoadJson();
+            }
+
+            if (ILReflectJsonImport.FsmClassInfoList == null)
+            {
                 return false;
             }
 
-            var action = target as ILHotFsmStateActionProxy;
+            var action = target as ILHotFsmProxy;
             int selected = 0;
 			if(!string.IsNullOrEmpty(action._runtimeClassName))
 				selected = ILReflectJsonImport.FsmClassTypes.IndexOf(action._runtimeClassName);
@@ -181,43 +185,43 @@ namespace ILHot
 
         void DrawExpand(ILHotFsmProxyStruct fsmStruct, IrpClassInfo classInfo, string baseName, bool draw)
         {
-            foreach (var field in classInfo.Fields)
-            {
-                var fieldKey    = string.Concat(baseName, field.FieldName);
-                if (field.FieldType == typeof(FsmEvent))
-                {
-                    DrawEvents(fieldKey, field.FieldName, fsmStruct.PreviousEventValueMapping, fsmStruct.NewEventValueMapping, draw);
-                }
-                else if (field.FieldType == typeof(FsmString)
-                    || field.FieldType == typeof(FsmFloat)
-                    || field.FieldType == typeof(FsmBool)
-                    || field.FieldType == typeof(FsmObject))
-                {
-                    DrawNamedVariable(fieldKey, field.FieldName, field.FieldType, fsmStruct.PreviousVariableValueMapping, fsmStruct.NewVariableValueMapping, draw);
-                }
-                else if (field.FieldType.GetCustomAttributes(typeof(ILHotFsmSerilizableAttribute), false).Length != 0)
-                {
-                    var drawClass = field.ClassInfo;
-
-                    FsmBool currentValue = true;
-                    if (((FsmBool)(fsmStruct.PreviousExpandValues.ContainsKey(fieldKey))).Value)
-                        currentValue = (FsmBool)(fsmStruct.PreviousExpandValues[fieldKey]);
-
-                    currentValue.Value = FsmEditorGUILayout.BoldFoldout(currentValue.Value, new GUIContent(field.FieldName));
-                    if (currentValue.Value)
-                    {
-                        EditorGUI.indentLevel += 1;
-                        DrawExpand(fsmStruct, drawClass, string.Concat(fieldKey, "."), true);
-                        EditorGUI.indentLevel -= 1;
-                    }
-                    else
-                    {
-                        DrawExpand(fsmStruct, drawClass, string.Concat(fieldKey, "."), false);
-                    }
-
-                    fsmStruct.NewExpandValues.Add(fieldKey, currentValue);
-                }
-            }
+            //  foreach (var field in classInfo.Fields)
+            //  {
+            //      var fieldKey    = string.Concat(baseName, field.FieldName);
+            //      if (field.FieldType == typeof(FsmEvent))
+            //      {
+            //          DrawEvents(fieldKey, field.FieldName, fsmStruct.PreviousEventValueMapping, fsmStruct.NewEventValueMapping, draw);
+            //      }
+            //      else if (field.FieldType == typeof(FsmString)
+            //          || field.FieldType == typeof(FsmFloat)
+            //          || field.FieldType == typeof(FsmBool)
+            //          || field.FieldType == typeof(FsmObject))
+            //      {
+            //          DrawNamedVariable(fieldKey, field.FieldName, field.FieldType, fsmStruct.PreviousVariableValueMapping, fsmStruct.NewVariableValueMapping, draw);
+            //      }
+            //      else if (field.FieldType.GetCustomAttributes(typeof(ILHotFsmSerilizableAttribute), false).Length != 0)
+            //      {
+            //          var drawClass = field.ClassInfo;
+            //  
+            //          FsmBool currentValue = true;
+            //          if (((FsmBool)(fsmStruct.PreviousExpandValues.ContainsKey(fieldKey))).Value)
+            //              currentValue = (FsmBool)(fsmStruct.PreviousExpandValues[fieldKey]);
+            //  
+            //          currentValue.Value = FsmEditorGUILayout.BoldFoldout(currentValue.Value, new GUIContent(field.FieldName));
+            //          if (currentValue.Value)
+            //          {
+            //              EditorGUI.indentLevel += 1;
+            //              DrawExpand(fsmStruct, drawClass, string.Concat(fieldKey, "."), true);
+            //              EditorGUI.indentLevel -= 1;
+            //          }
+            //          else
+            //          {
+            //              DrawExpand(fsmStruct, drawClass, string.Concat(fieldKey, "."), false);
+            //          }
+            //  
+            //          fsmStruct.NewExpandValues.Add(fieldKey, currentValue);
+            //      }
+            //  }
 
         }
 

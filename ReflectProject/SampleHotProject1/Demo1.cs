@@ -1,4 +1,4 @@
-﻿using ILHotAttribute;
+﻿using ILHot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,46 +7,46 @@ using UnityEngine;
 
 namespace SampleHotProject1
 {
-    [ILHotMonoSerilizable(DisplayName = "TestObj", SubClass = false)]
-    public class DemoTestObj : UnityEngine.Object
+    [ILHotMonoProxy]
+    [ILHotComponentMenu(MenuPath = "DemoTestObjComponent")]
+    public class DemoTestObj : MonoBehaviour
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public string DemoStr;
     }
-
-    [ILHotMonoSerilizable(DisplayName = "Test", SubClass = true)]
+    
     public class DemoTest
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public string DemoStr;
-        [SerializeField]
+        [ILHotSerializeField]
         public bool DemoBool;
-        [SerializeField]
+        [ILHotSerializeField]
         public float DemoFloat;
-        [SerializeField]
+        [ILHotSerializeField]
         public DemoTestEx TestEx;
     }
-
-    [ILHotMonoSerilizable(DisplayName = "Test", SubClass = true)]
+    
     public class DemoTestEx
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public string LadyGaGa;
     }
-
-    [ILHotMonoSerilizable(DisplayName = "DemoTest")]
+    
+    [ILHotMonoProxy]
+    [ILHotComponentMenu(MenuPath = "DemoTestComponent")]
     public class Demo1
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public string TempStr;
 
-        [SerializeField]
+        [ILHotSerializeField]
         public UnityEngine.Object Obj;
 
-        [SerializeField]
+        [ILHotSerializeField]
         public DemoTest Demo;
 
-        [SerializeField]
+        [ILHotSerializeField]
         public DemoTestObj DemoObj;
 
         public void PrintTest()
@@ -54,6 +54,7 @@ namespace SampleHotProject1
             Debug.Log("PrintTest Demo.DemoStr " + Demo.DemoStr);
             Debug.Log("PrintTest Demo.DemoBool " + Demo.DemoBool);
             Debug.Log("PrintTest Demo.DemoFloat " + Demo.DemoFloat);
+            Debug.Log("PrintTest DemoObj.DemoStr " + DemoObj.DemoStr);
             Debug.Log("PrintTest Demo.TestEx.LadyGaGa " + Demo.TestEx.LadyGaGa);
         }
 
@@ -71,8 +72,7 @@ namespace SampleHotProject1
         {
             return string.Concat("IL1.VirtualTest:" + nameStr);
         }
-
-        [ILHotSerilizableMethod]
+        
         public static string Test1(string tmpStr)
         {
             return string.Concat("IL1.Test1:" + tmpStr);
@@ -87,15 +87,12 @@ namespace SampleHotProject1
             };
         }
     }
-
-    [ILHotMonoSerilizable(DisplayName = "DemoTest")]
+    
+    [ILHotComponentMenu(MenuPath = "Demo1TestComponent")]
     public class Demo1Test
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public string TempStr;
-
-        //  [SerializeField]
-        //  public UnityEngine.Object Obj;
         
         public void Start()
         {
@@ -111,8 +108,7 @@ namespace SampleHotProject1
         {
             return string.Concat("IL1.VirtualTest:" + nameStr);
         }
-
-        [ILHotSerilizableMethod]
+        
         public static string Test1(string tmpStr)
         {
             return string.Concat("IL1.Test1:" + tmpStr);
@@ -121,11 +117,6 @@ namespace SampleHotProject1
         public static string GetVector()
         {
             return "vector";
-            //  return new MyVector2()
-            //  {
-            //      x = 1,
-            //      y = 2
-            //  };
         }
     }
 

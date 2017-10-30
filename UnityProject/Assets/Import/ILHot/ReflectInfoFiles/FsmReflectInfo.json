@@ -1,40 +1,52 @@
 [
   {
     "ClassName": "SampleHotProject1.FsmDemo",
-    "DisplayName": "DemoTest",
+    "DisplayName": "FsmDemoComponent",
+    "IsSubClass": false,
+    "IsObject": false,
     "Fields": [
       {
         "FieldName": "_fx",
-        "FieldType": "HutongGames.PlayMaker.FsmObject, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+        "FieldType": "HutongGames.PlayMaker.FsmObject",
+        "Attributes": null,
         "ClassInfo": null
       },
       {
         "FieldName": "_fxTest",
-        "FieldType": "SampleHotProject1.FsmTest, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "FieldType": "SampleHotProject1.FsmTest",
+        "Attributes": null,
         "ClassInfo": {
           "ClassName": "SampleHotProject1.FsmTest",
-          "DisplayName": "DemoTest",
+          "DisplayName": "FsmTestComponent",
+          "IsSubClass": false,
+          "IsObject": false,
           "Fields": [
             {
               "FieldName": "_ladyGaGa",
-              "FieldType": "HutongGames.PlayMaker.FsmString, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+              "FieldType": "HutongGames.PlayMaker.FsmString",
+              "Attributes": null,
               "ClassInfo": null
             },
             {
               "FieldName": "_Michele",
-              "FieldType": "SampleHotProject1.FsmTestEx, SampleHotProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "FieldType": "SampleHotProject1.FsmTestEx",
+              "Attributes": null,
               "ClassInfo": {
                 "ClassName": "SampleHotProject1.FsmTestEx",
-                "DisplayName": "DemoTest",
+                "DisplayName": "FsmTestExComponent",
+                "IsSubClass": false,
+                "IsObject": false,
                 "Fields": [
                   {
                     "FieldName": "_Michele",
-                    "FieldType": "HutongGames.PlayMaker.FsmString, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+                    "FieldType": "HutongGames.PlayMaker.FsmString",
+                    "Attributes": null,
                     "ClassInfo": null
                   },
                   {
                     "FieldName": "_age",
-                    "FieldType": "HutongGames.PlayMaker.FsmFloat, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+                    "FieldType": "HutongGames.PlayMaker.FsmFloat",
+                    "Attributes": null,
                     "ClassInfo": null
                   }
                 ]
@@ -45,12 +57,73 @@
       },
       {
         "FieldName": "_uids",
-        "FieldType": "HutongGames.PlayMaker.FsmString, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+        "FieldType": "HutongGames.PlayMaker.FsmString",
+        "Attributes": null,
         "ClassInfo": null
       },
       {
         "FieldName": "_radius",
-        "FieldType": "HutongGames.PlayMaker.FsmFloat, PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null",
+        "FieldType": "HutongGames.PlayMaker.FsmFloat",
+        "Attributes": null,
+        "ClassInfo": null
+      }
+    ]
+  },
+  {
+    "ClassName": "SampleHotProject1.FsmTest",
+    "DisplayName": "FsmTestComponent",
+    "IsSubClass": false,
+    "IsObject": false,
+    "Fields": [
+      {
+        "FieldName": "_ladyGaGa",
+        "FieldType": "HutongGames.PlayMaker.FsmString",
+        "Attributes": null,
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "_Michele",
+        "FieldType": "SampleHotProject1.FsmTestEx",
+        "Attributes": null,
+        "ClassInfo": {
+          "ClassName": "SampleHotProject1.FsmTestEx",
+          "DisplayName": "FsmTestExComponent",
+          "IsSubClass": false,
+          "IsObject": false,
+          "Fields": [
+            {
+              "FieldName": "_Michele",
+              "FieldType": "HutongGames.PlayMaker.FsmString",
+              "Attributes": null,
+              "ClassInfo": null
+            },
+            {
+              "FieldName": "_age",
+              "FieldType": "HutongGames.PlayMaker.FsmFloat",
+              "Attributes": null,
+              "ClassInfo": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "ClassName": "SampleHotProject1.FsmTestEx",
+    "DisplayName": "FsmTestExComponent",
+    "IsSubClass": false,
+    "IsObject": false,
+    "Fields": [
+      {
+        "FieldName": "_Michele",
+        "FieldType": "HutongGames.PlayMaker.FsmString",
+        "Attributes": null,
+        "ClassInfo": null
+      },
+      {
+        "FieldName": "_age",
+        "FieldType": "HutongGames.PlayMaker.FsmFloat",
+        "Attributes": null,
         "ClassInfo": null
       }
     ]

@@ -1,48 +1,49 @@
 ﻿using HutongGames.PlayMaker;
+using ILHot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using ILHotAttribute;
 
 namespace SampleHotProject1
 {
-    [ILHotFsmSerilizable(DisplayName = "DemoTest", SubClass = true)]
+    [ILHotComponentMenu(MenuPath = "FsmTestComponent")]
     public class FsmTest : ILHotFsmStateAction
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public FsmString _ladyGaGa;
 
-        [SerializeField]
+        [ILHotSerializeField]
         public FsmTestEx _Michele;
     }
 
-    [ILHotFsmSerilizable(DisplayName = "DemoTest", SubClass = true)]
+    [ILHotComponentMenu(MenuPath = "FsmTestExComponent")]
     public class FsmTestEx : ILHotFsmStateAction
     {
-        [SerializeField]
+        [ILHotSerializeField]
         public FsmString _Michele;
 
-        [SerializeField]
+        [ILHotSerializeField]
         public FsmFloat _age;
     }
 
-    [ILHotFsmSerilizable(DisplayName = "DemoTest")]
+    [ILHotComponentMenu(MenuPath = "FsmDemoComponent")]
+    [ILHotFsmProxy]
     public class FsmDemo : ILHotFsmStateAction
     {
-        [SerializeField]
+        [ILHotSerializeField]
         FsmObject _fx;
 
-        [SerializeField]
+        [ILHotSerializeField]
         FsmTest _fxTest;
 
         List<string> _inAreaUids = new List<string>();
 
-        [SerializeField]
+        [ILHotSerializeField]
         FsmString _uids;
 
-        [SerializeField]
+        [ILHotSerializeField]
         FsmFloat _radius;
 
         FsmGameObject go;

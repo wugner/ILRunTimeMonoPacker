@@ -49,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IrpClassInfo.cs" />
-    <Compile Include="IrpFileInfo.cs" />
     <Compile Include="Reflect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,7 +59,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy ..\Debug\ReflectInfoGenerator.dll ..\..\..\..\UnityProject\Assets\Import\ReflectInfoGenerator\ReflectInfoGenerator.dll
 copy ..\Debug\ReflectInfoGenerator.pdb ..\..\..\..\UnityProject\Assets\Import\ReflectInfoGenerator\ReflectInfoGenerator.pdb
-</PostBuildEvent>
+copy ..\Debug\Newtonsoft.Json.dll ..\..\..\..\UnityProject\Assets\Import\ReflectInfoGenerator\Newtonsoft.Json.dll
+copy ..\Debug\Newtonsoft.Json.xml ..\..\..\..\UnityProject\Assets\Import\ReflectInfoGenerator\Newtonsoft.Json.xml</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,4 @@
-﻿using ILHotAttribute;
-using PartialTest;
+﻿using PartialTest;
 using SampleHotProject1;
 using System;
 using System.Collections.Generic;

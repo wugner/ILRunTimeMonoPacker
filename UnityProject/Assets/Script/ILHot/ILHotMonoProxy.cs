@@ -52,7 +52,14 @@ namespace ILHot
         [SerializeField]
         List<bool> _expandValues;
         public List<bool> ExpandValues { set { _expandValues = value; } get { return _expandValues; } }
-        
+
+        [SerializeField]
+        List<string> _ilObjectNames;
+        public List<string> ILObjectNames { set { _ilObjectNames = value; } get { return _ilObjectNames; } }
+        [SerializeField]
+        List<Component> _ilObjectValues;
+        public List<Component> ILObjectValues { set { _ilObjectValues = value; } get { return _ilObjectValues; } }
+
         public List<string> EventNames;
 		public List<UnityEngine.Events.UnityEvent> EventValues;
 
@@ -95,6 +102,7 @@ namespace ILHot
 
             if (_appdomain != null)
             {
+                Debug.Log("runtimeClassName " + runtimeClassName);
                 instance = _appdomain.Instantiate(runtimeClassName);
             }
             else
@@ -125,6 +133,7 @@ namespace ILHot
 
 		void SetFieldValue(string fieldName, object value)
 		{
+            Debug.Log("fieldName " + fieldName);
 			var field = _instanceType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             var instance = _instance;
             if (field == null)
